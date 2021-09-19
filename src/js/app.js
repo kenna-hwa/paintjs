@@ -22,7 +22,6 @@ ctx.lineWidth = 2.5;
 let painting = false;
 let filling = false;
 
-
 //line 그리기
 
 function stopPainting(){
@@ -43,7 +42,7 @@ function onMouseMove(event){
         ctx.moveTo(x, y);
     } else {
         ctx.lineTo(x, y);
-        ctx.stroke()
+        ctx.stroke();
     }
 }
 
@@ -97,8 +96,6 @@ if(mode){
 function handleCanvasClick(){
     if(filling){
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }else{
-
     }
 }
 
@@ -118,6 +115,6 @@ function handleSaveClick(){
     const image = canvas.toDataURL("image/png");
     const link = document.createElement("a");
     link.href = image;
-    link.download = "image[❤].png"
+    link.download = "image.png"
     link.click();
 }

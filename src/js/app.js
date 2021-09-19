@@ -8,7 +8,10 @@ const ctx = canvas.getContext("2d");
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
-ctx.strokeStyle = "#2c2c2c";
+const INITIAL_COLOR = "#2c2c2c"
+
+ctx.strokeStyle = INITIAL_COLOR;
+ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 2.5;
 
 // 조건 선언
@@ -23,7 +26,9 @@ function stopPainting(){
 }
 
 function startPainting(){
-    painting = true;
+    if(filling === false){
+        painting = true;
+    }
 }
 
 function onMouseMove(event){
@@ -42,14 +47,16 @@ function onMouseMove(event){
 
 function handleColorClick(event){
     const color = window.getComputedStyle(event.target).backgroundColor;
-    ctx.strokeStyle=color;
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
 }
 
 if(canvas){
-    canvas.addEventListener("mousemove", onMouseMove)
-    canvas.addEventListener("mousedown", startPainting)
-    canvas.addEventListener("mouseup", stopPainting)
-    canvas.addEventListener("mouseleave", stopPainting)
+    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mousedown", startPainting);
+    canvas.addEventListener("mouseup", stopPainting);
+    canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("click", handleCanvasClick)
 }
 
 colors.forEach(color => color.addEventListener("click", handleColorClick));
@@ -71,13 +78,21 @@ if(range){
 function handleModeClick(){
     if(filling === true){
         filling = false;
-        mode.textContent = "Fill"
+        mode.textContent = "Fill";
     }else{
         filling = true;
-        mode.textContent = "Paint"
+        mode.textContent = "Paint";
     }
 }
 
 if(mode){
     mode.addEventListener("click", handleModeClick)
+}
+
+function handleCanvasClick(){
+    if(filling){
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }else{
+
+    }
 }
